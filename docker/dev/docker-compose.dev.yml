@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  brewcomp:
+    container_name: brewcomp-frontend
+    restart: unless-stopped
+    build:
+      context: ..
+      dockerfile: Dockerfile.dev
+    env_file: ../.env
+    ports:
+      - ${FRONTEND_PORT}:5173/tcp
+    volumes:
+      - ../:/app
+      - /app/node_modules
+  mail:
+    container_name: supabase-mail
+    image: inbucket/inbucket:stable
+    ports:
+      - '2500:2500' # SMTP
+      - '9000:9000' # web interface
+      - '1100:1100' # POP3
+  meta:
+    ports:
+      - 5555:8080
+  db:
+    volumes:
+      - /var/lib/postgresql/data
+      - ./dev/data.sql:/docker-entrypoint-initdb.d/data.sql
+  storage:
+    volumes:
+      - /var/lib/storage
