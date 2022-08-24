@@ -1,6 +1,8 @@
 # BrewComp
 
-A modern way to manage home brew clubs and competitions.
+A modern way to manage home brew clubs and competitions. 
+
+Built with [SvelteKit](https://kit.svelte.dev/) and [Supabase](https://supabase.com/docs). 
 ## Development
 
 There is a bash script called `run_local` which is used to spin up and down the local dev environment. It's usage is shown below:
