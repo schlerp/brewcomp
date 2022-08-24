@@ -1,24 +1,23 @@
 <script lang="ts">
-	import type { NavItemDefinition } from '../types';
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 	import { createEventDispatcher } from 'svelte';
 
-	export let item: NavItemDefinition;
+	export let url: string;
 
 	const dispatch = createEventDispatcher();
 
 	function onClick() {
-		goto(item.url);
-		dispatch('clicked', { item });
+		goto(url);
+		dispatch('clicked', url);
 	}
 
 	let className: string;
-	$: className = item.url === $page.url.pathname ? 'active' : '';
+	$: className = url === $page.url.pathname ? 'active' : '';
 </script>
 
-<a on:click|preventDefault={onClick} href={item.url} class={className}>
-	{item.content}
+<a on:click|preventDefault={onClick} href={url} class={className}>
+	<slot />
 </a>
 
 <style>

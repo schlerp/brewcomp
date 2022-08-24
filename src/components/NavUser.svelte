@@ -1,11 +1,16 @@
 <script lang="ts">
 	import NavItem from './NavItem.svelte';
+	import { supabase } from '$lib/supabaseClient';
+	import Fa from 'svelte-fa/src/fa.svelte';
+	import { faUser, faLock, faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+	import Profile from './Profile.svelte';
 
-	const currentUser = undefined;
+	let currentUser = supabase.auth.user();
 </script>
 
-{#if currentUser !== undefined}
-	<NavItem item={{ content: '🧑 John Smith', url: '/profile' }} />
+{#if currentUser !== null}
+	<NavItem url={'/profile'}><Fa icon={faUser} /> Profile</NavItem>
+	<NavItem url={'/signout'}><Fa icon={faArrowRightFromBracket} /> Sign out</NavItem>
 {:else}
-	<NavItem item={{ content: 'Sign in', url: '/signin' }} />
+	<NavItem url={'/signin'}><Fa icon={faLock} /> Sign in</NavItem>
 {/if}

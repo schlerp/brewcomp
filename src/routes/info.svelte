@@ -1,7 +1,11 @@
 <script lang="ts">
 	import { formatAsCurrency } from '../utils';
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
+	import { extraPageTitle } from '$lib/pageTitleStore';
+
 	import type { CompetitionDefinition, BeerStyle } from '../types';
+
+	extraPageTitle.set('Info');
 
 	let comp: CompetitionDefinition = {
 		name: 'End of Year Competition (2022)',
@@ -17,11 +21,20 @@
 		officialOpenDate: new Date(),
 		officialCloseDate: new Date(),
 		awardsDate: new Date(),
-		allowedStyles: []
+		allowedStyles: [
+			{ name: 'Belgian Golden Strong Ale', category: '25', subcategory: 'c', extraInfoReq: false },
+			{ name: 'Saison', category: '25', subcategory: 'b', extraInfoReq: false },
+			{ name: 'Classic Smoked Beer', category: '32', subcategory: 'a', extraInfoReq: true },
+			{ name: 'Belgian Single', category: '26', subcategory: 'a', extraInfoReq: false }
+		]
 	};
 	let feeString: string = `${comp.entryFee} ${comp.entryCurrency}`;
 	onMount(() => {
 		feeString = formatAsCurrency(comp.entryFee, comp.entryCurrency);
+	});
+
+	onDestroy(() => {
+		extraPageTitle.set('');
 	});
 </script>
 
@@ -55,9 +68,45 @@
 	The price per entry is <span class="highlight">{feeString}</span>.
 </p>
 
+<h2>Accepted Styles</h2>
+<table>
+	<thead
+		><tr><td>Category - Subcategory</td><td>Style Name</td><td>Extra Info Required?</td></tr></thead
+	>
+	<tbody>
+		{#each comp.allowedStyles as allowedStyle}
+			<tr>
+				<td>{allowedStyle.category} - {allowedStyle.subcategory.toLocaleUpperCase()}</td>
+				<td>{allowedStyle.name}</td>
+				<td>{allowedStyle.extraInfoReq ? '✅' : ''}</td>
+			</tr>
+		{/each}
+	</tbody>
+</table>
+
+<h2>Awards Ceremony</h2>
+<p>
+	The awards ceremony will be held on <span class="highlight">{comp.awardsDate}</span>.
+</p>
+
 <style>
 	span.highlight {
 		font-weight: bold;
 		color: var(--pal-font-highlight);
+	}
+	table thead {
+		font-weight: bold;
+		text-align: center;
+	}
+	table td {
+		text-align: center;
+	}
+
+	table th,
+	table td {
+		padding: 12px 15px;
+	}
+	thead tr {
+		border: 1px solid grey;
 	}
 </style>

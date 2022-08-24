@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { supabase } from '$lib/supabaseClient';
+	import InlineAlert from './InlineAlert.svelte';
 
 	let loading: boolean = false;
 	let email: string;
@@ -18,14 +19,14 @@
 	};
 </script>
 
-<form class="row flex flex-center" on:submit|preventDefault={handleLogin}>
-	<div class="col-6 form-widget">
-		<h1 class="header">Supabase + Svelte</h1>
+<form on:submit|preventDefault={handleLogin}>
+	<div class="form">
+		<h1 class="header">Sign in</h1>
 		<p class="description">Sign in via magic link with your email below</p>
-		<div>
+		<div class="form-control">
 			<input class="inputField" type="email" placeholder="Your email" bind:value={email} />
 		</div>
-		<div>
+		<div class="form-control">
 			<input
 				type="submit"
 				class="button block"
@@ -33,5 +34,9 @@
 				disabled={loading}
 			/>
 		</div>
+		<InlineAlert>
+			<strong>Magic Link:</strong> A link will be emailed to your provided email to either sign in, or
+			continue creating your profile!
+		</InlineAlert>
 	</div>
 </form>

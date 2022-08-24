@@ -30,7 +30,9 @@
 	</div>
 	<div id="nav-left" class={showNav ? 'active' : ''}>
 		{#each navList as item}
-			<NavItem {item} on:clicked={hideMenu} />
+			<NavItem url={item.url} on:clicked={hideMenu}>
+				{item.content}
+			</NavItem>
 		{/each}
 	</div>
 	<div id="nav-right">

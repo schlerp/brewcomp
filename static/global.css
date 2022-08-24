@@ -4,6 +4,7 @@
     /* pallete */
     --border-radius: 4px;
     --pal-light: #fff;
+    --pal-extra-dark: #1e2a36;
     --pal-dark: #33475b;
     --pal-soft: #aaa;
     --pal-bg-light: #efefef;
@@ -21,6 +22,12 @@
     --spacing: 0.5em;
 }
 
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
 html {
     height: 100%;
 }
@@ -35,4 +42,25 @@ body {
     flex-direction: column;
     align-content: space-between;
     justify-content: space-between;
+}
+
+input {
+    padding: 4px;
+    line-height: 1;
+    border: 1px solid var(--pal-soft);
+    background-color: var(--pal-bg-soft);
+    outline: none;
+    margin-block: var(--spacing);
+    border-radius: var(--border-radius);
+    min-width: 15em;
+    min-height: 2em;
+}
+
+input:focus {
+    border: 1px solid var(--pal-extra-dark);
+    outline: none;
+}
+
+input[type=submit] {
+    border: 2px solid var(--pal-font-content);
 }

@@ -2,13 +2,11 @@
 	import NavBar from '../components/NavBar.svelte';
 	import Footer from '../components/Footer.svelte';
 	import Sidebar from '../components/Sidebar.svelte';
-	import { config } from '../config';
+	import HeadTitle from '../components/HeadTitle.svelte';
 	import PageTransition from '../components/PageTransition.svelte';
 </script>
 
-<svelte:head>
-	<title>Brew Comp - {config.clubName}</title>
-</svelte:head>
+<HeadTitle />
 
 <div>
 	<NavBar />
